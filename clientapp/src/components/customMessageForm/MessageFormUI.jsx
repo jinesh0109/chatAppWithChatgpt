@@ -6,7 +6,7 @@ import {
   import React, { useState } from "react";
   import Dropzone from "react-dropzone";
 
-function MessageFormUI({setAttachment,message,handleChange,handleSubmit,}) {
+function MessageFormUI({setAttachment,message,handleChange,handleSubmit,appendText,handleKeyDown}) {
   const [preview,setPreview] = useState("");
   return (
     <div className='message-form-container'>
@@ -28,7 +28,11 @@ function MessageFormUI({setAttachment,message,handleChange,handleSubmit,}) {
         <div className='message-form'>
             <div className='message-form-input-container'>
                 <input className='message-form-input' type='text' value={message} onChange={handleChange}
-                placeholder='send a message'/>
+                placeholder='send a message' onKeyDown={handleKeyDown}/>
+                {appendText && (
+                    <input className="message-form-assist" type="text" disabled="disabled"
+                    value={`${message} ${appendText}`}/>
+                )}
             </div>
             <div className='message-form-icons'>
                 <Dropzone 
