@@ -13,7 +13,7 @@ router.post("/text", async (req, res) => {
     const response = await openai.createChatCompletion({
       model: "gpt-3.5-turbo",
       messages: [
-        { role: "system", content: "You are a helpful assistant." }, // this represents the bot and what role they will assume
+        { role: "system", content: "You are a helpful assistant for providing data and code if needed" }, // this represents the bot and what role they will assume
         { role: "user", content: text }, // the message that the user sends
 
         // BONUS NOTE: you can also provide a list of messages to the bot to give context
@@ -90,33 +90,33 @@ router.post("/assist", async (req, res) => {
   try {
     const { text } = req.body;
     
-    if(req.body.activeChatId)
-    {
-        const activeChatId = req.body.activeChatId;
-        console.log("after submitting ", req.body);
-        const response = await openai.createChatCompletion({
-            model: "gpt-3.5-turbo",
-            messages: [
-              { role: "system", content: "You are a helpful assistant." }, 
-              { role: "user", content: text }, 
-            ]
-        }) 
-        await axios.post(
-            `https://api.chatengine.io/chats/${activeChatId}/messages/`,
-            { text: response.data.choices[0].message.content },
-            {
-              headers: {
-                "Project-ID": process.env.PROJECT_ID,
-                "User-Name": process.env.BOT_USER_NAME,
-                "User-Secret": process.env.BOT_USER_SECRET,
-              },
-            }
-          );
-          console.log("response ",response.data.choices[0].message.content);
-          res.status(200).json({ text: response.data.choices[0].message.content });           
+    // if(req.body.activeChatId)
+    // {
+    //     const activeChatId = req.body.activeChatId;
+    //     console.log("after submitting ", req.body);
+    //     const response = await openai.createChatCompletion({
+    //         model: "gpt-3.5-turbo",
+    //         messages: [
+    //           { role: "system", content: "You are a helpful assistant." }, 
+    //           { role: "user", content: text }, 
+    //         ]
+    //     }) 
+    //     await axios.post(
+    //         `https://api.chatengine.io/chats/${activeChatId}/messages/`,
+    //         { text: response.data.choices[0].message.content },
+    //         {
+    //           headers: {
+    //             "Project-ID": process.env.PROJECT_ID,
+    //             "User-Name": process.env.BOT_USER_NAME,
+    //             "User-Secret": process.env.BOT_USER_SECRET,
+    //           },
+    //         }
+    //       );
+    //       console.log("response ",response.data.choices[0].message.content);
+    //       res.status(200).json({ text: response.data.choices[0].message.content });           
           
-    }
-    else{
+    // }
+    // else{
         const response = await openai.createChatCompletion({
             model: "gpt-3.5-turbo",
             messages: [
@@ -130,7 +130,7 @@ router.post("/assist", async (req, res) => {
           });
       
           res.status(200).json({ text: response.data.choices[0].message.content });
-    }
+    // }
     
   } catch (error) {
     console.error("error", error);

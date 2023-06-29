@@ -1,6 +1,6 @@
 import React,{useEffect, useState} from 'react'
 import MessageFormUI from './MessageFormUI';
-import { usePostAiAssistMutation } from '../../state/api';
+import { usePostAiAssistMutation,usePostAiTextMutation } from '../../state/api';
 function useDebounce(value,delay){
     const [debounceValue,setDebounceValue]=useState("");
 
@@ -18,6 +18,7 @@ function AiAssist({props,activeChat}) {
     const [message,setMessage] = useState("");
     const [attachment,setAttachment] = useState("");
     const [triggerAssist,resultAssist] = usePostAiAssistMutation();
+    const [trigger] = usePostAiTextMutation();
     const [appendText,setAppendText] = useState("");
     const handleChange = (e)=>{
         setMessage(e.target.value);
@@ -33,10 +34,11 @@ function AiAssist({props,activeChat}) {
             sender_username:props.username,
             activeChatId:activeChat.id
         }
-        triggerAssist(formData)
+        trigger(formData)
         props.onSubmit(formData);
         setMessage("");
         setAttachment("");
+        setAppendText("");
     }
     const debounceValue = useDebounce(message,1000);
     useEffect(()=>{
