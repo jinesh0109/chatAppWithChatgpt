@@ -66,7 +66,6 @@ router.post("/code", async (req, res) => {
         { role: "user", content: text }, // the message that the user sends
       ],
     });
-    console.log("response ",response.data.choices[0].message.content)
     await axios.post(
       `https://api.chatengine.io/chats/${activeChatId}/messages/`,
       { text: response.data.choices[0].message.content },
