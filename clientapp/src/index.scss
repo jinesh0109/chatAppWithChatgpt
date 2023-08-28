@@ -60,6 +60,9 @@ body,
 .login-container {
   color: $tertiary-50;
 }
+.login-title{
+  color: $tertiary-100;
+}
 
 .login-actions {
   display: flex;
@@ -90,6 +93,19 @@ body,
   cursor: pointer;
 }
 
+.btn{
+  color: white;
+  border-radius: 10px;
+  border-color: green;
+  background-color: green;
+  padding: 10px;
+  cursor: pointer;
+}
+.btn:hover{
+  background-color: lightblue;
+  border-color: lightblue;
+  color: darkblue;
+}
 /* Chat Styling */
 .ce-chat-engine {
   color: $tertiary-50 !important;
